@@ -20,7 +20,6 @@ export class ResultsComponent {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ results }) => {
-      console.log(results);
       this.repositories = results.items;
       this.totalCount = results.items.length;
     });
