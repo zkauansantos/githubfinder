@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetDataGithubService } from 'src/app/services/get-data-github.service';
 
 @Component({
   selector: 'app-search-input',
