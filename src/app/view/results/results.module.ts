@@ -16,9 +16,15 @@ import { SearchInputComponent } from 'src/app/components/search-input/search-inp
 
 import { GetLastUpdateRepoPipe } from 'src/app/pipes/get-last-update-repo.pipe';
 import { GithubService } from 'src/app/services/github/github.service';
+import { EmptySearchComponent } from 'src/app/components/empty-search/empty-search.component';
 
 @NgModule({
-  declarations: [ResultsComponent, SearchInputComponent, GetLastUpdateRepoPipe],
+  declarations: [
+    ResultsComponent,
+    SearchInputComponent,
+    GetLastUpdateRepoPipe,
+    EmptySearchComponent,
+  ],
   imports: [
     HttpClientModule,
     CommonModule,
