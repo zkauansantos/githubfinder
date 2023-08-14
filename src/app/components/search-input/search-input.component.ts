@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GetDataGithubService } from 'src/app/services/get-data-github.service';
 
 @Component({
@@ -8,21 +9,41 @@ import { GetDataGithubService } from 'src/app/services/get-data-github.service';
 })
 export class SearchInputComponent {
   @Input('placeholder') placeholder!: string;
+  @Output() searchChanged = new EventEmitter<{ searchTerm: string }>();
 
   form = new FormControl();
   searchTerm = '';
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+
   ngOnInit() {
     this.form.valueChanges.subscribe((value) => (this.searchTerm = value));
+  }
+
+  onErase() {
+    this.form.reset();
   }
 
   onSearch(event: KeyboardEvent) {
     if (event.key !== 'Enter') return;
 
     if (!this.form.value) return;
-  }
 
-  onErase() {
-    this.form.reset();
+    if (this.router.url === '/') {
+      this.router.navigate(['/results'], {
+        queryParams: {
+          searchTerm: this.searchTerm,
+        },
+      });
+      return;
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { searchTerm: this.searchTerm },
+      queryParamsHandling: 'merge',
+    });
+
+    this.searchChanged.emit({ searchTerm: this.searchTerm });
   }
 }

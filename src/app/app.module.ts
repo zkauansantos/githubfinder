@@ -1,38 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { NgIconsModule } from '@ng-icons/core';
-import { heroMagnifyingGlass, heroXCircle } from '@ng-icons/heroicons/outline';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HomeComponent } from './components/home/home.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SearchRepoComponent } from './components/search-repo/search-repo.component';
-import { ResultsComponent } from './components/results/results.component';
-import { SearchInputComponent } from './components/search-input/search-input.component';
+import { HomeComponent } from './view/home/home.component';
+import { ResultsModule } from './view/results/results.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    SearchRepoComponent,
-    HomeComponent,
-    ResultsComponent,
-    SearchInputComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    NgxPaginationModule,
-    NgIconsModule.withIcons({ heroMagnifyingGlass, heroXCircle }),
-  ],
+  declarations: [AppComponent, HomeComponent],
+  imports: [BrowserModule, AppRoutingModule, ResultsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

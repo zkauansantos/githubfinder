@@ -22,7 +22,7 @@ describe('GetDataGithubService', () => {
 
   it('must be called a GET with the query of the input of the HTML', () => {
     const spy = spyOn(http, 'get').and.callThrough();
-    service.getDataFromGithub('query');
+    service.getRepositories('query');
     expect(spy).toHaveBeenCalled();
   });
 });
