@@ -8,34 +8,41 @@ import { RepositoriesResponse } from 'src/interfaces/RepositoriesResponse';
   templateUrl: './results.component.html',
 })
 export class ResultsComponent {
+  repositories: RepositoriesResponse['items'] = [];
+  totalCount = 0;
+  currentPage = 1;
+  isLoading = false;
+  searchTerm = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private githubService: GithubService
   ) {}
 
-  repositories: RepositoriesResponse['items'] = [];
-  totalCount = 0;
-  currentPage = 1;
-  isLoading = false;
-
   ngOnInit() {
-    this.activatedRoute.data.subscribe(({ results }) => {
-      this.repositories = results.items;
-      this.totalCount = results.items.length;
+    this.activatedRoute.queryParams.subscribe(({ searchTerm }) => {
+      this.searchTerm = searchTerm;
     });
+
+    this.getData(this.searchTerm);
   }
 
-  searchChanged({ searchTerm }: { searchTerm: string }) {
+  getData(searchTerm: string) {
     this.isLoading = true;
+
     this.githubService.getRepositories(searchTerm).subscribe({
-      next: (results) => {
-        this.repositories = results.items;
-        this.totalCount = results.items.length;
+      next: ({ items }) => {
+        this.repositories = items;
+        this.totalCount = items.length;
         this.isLoading = false;
       },
       error: () => {
         this.isLoading = false;
       },
     });
+  }
+
+  searchChanged({ searchTerm }: { searchTerm: string }) {
+    this.getData(searchTerm);
   }
 }

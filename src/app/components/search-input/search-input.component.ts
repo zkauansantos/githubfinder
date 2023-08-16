@@ -16,6 +16,11 @@ export class SearchInputComponent {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(({ searchTerm }) => {
+      this.searchTerm = searchTerm;
+    });
+
+    this.form.setValue(this.searchTerm);
     this.form.valueChanges.subscribe((value) => (this.searchTerm = value));
   }
 
