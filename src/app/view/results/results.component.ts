@@ -24,25 +24,21 @@ export class ResultsComponent {
       this.searchTerm = searchTerm;
     });
 
-    this.getData(this.searchTerm);
+    this.getData();
   }
 
-  getData(searchTerm: string) {
+  getData() {
     this.isLoading = true;
 
-    this.githubService.getRepositories(searchTerm).subscribe({
+    this.githubService.getRepositories(this.searchTerm).subscribe({
       next: ({ items }) => {
         this.repositories = items;
         this.totalCount = items.length;
         this.isLoading = false;
       },
       error: () => {
-        this.isLoading = false;
+        alert('Descuple ocorea');
       },
     });
-  }
-
-  searchChanged({ searchTerm }: { searchTerm: string }) {
-    this.getData(searchTerm);
   }
 }
