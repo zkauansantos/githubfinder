@@ -17,6 +17,7 @@ import { SearchInputComponent } from 'src/app/components/search-input/search-inp
 import { GetLastUpdateRepoPipe } from 'src/app/pipes/get-last-update-repo.pipe';
 import { GithubService } from 'src/app/services/github/github.service';
 import { EmptySearchComponent } from 'src/app/components/empty-search/empty-search.component';
+import { ErrorFeedbackComponent } from 'src/app/components/error-feedback/error-feedback.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { EmptySearchComponent } from 'src/app/components/empty-search/empty-sear
     SearchInputComponent,
     GetLastUpdateRepoPipe,
     EmptySearchComponent,
+    ErrorFeedbackComponent,
   ],
   imports: [
     HttpClientModule,

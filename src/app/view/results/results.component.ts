@@ -13,6 +13,7 @@ export class ResultsComponent {
   currentPage = 1;
   isLoading = false;
   searchTerm = '';
+  isError = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,7 +38,8 @@ export class ResultsComponent {
         this.isLoading = false;
       },
       error: () => {
-        alert('Descuple ocorea');
+        this.isError = true;
+        this.isLoading = false;
       },
     });
   }
