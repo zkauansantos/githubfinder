@@ -1,28 +1,46 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { GithubService } from './github.service';
+import { RepositoriesResponse } from 'src/interfaces/RepositoriesResponse';
 
-describe('GetDataGithubService', () => {
+describe('GithubService', () => {
   let service: GithubService;
-  let http: HttpClient;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [GithubService],
     });
     service = TestBed.inject(GithubService);
-    http = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('must be called a GET with the query of the input of the HTML', () => {
-    const spy = spyOn(http, 'get').and.callThrough();
-    service.getRepositories('query');
-    expect(spy).toHaveBeenCalled();
+  it('should get repositories with correct URL and query', () => {
+    const query = 'dasçkdlasçfjaskldjsakdjhauoiwqyeipowq';
+    const mockResponse: RepositoriesResponse = {
+      items: []
+    };
+
+    service.getRepositories(query).subscribe((data) => {
+      expect(data).toEqual(mockResponse);
+    });
+
+    const req = httpTestingController.expectOne(
+      `${service.BASE_URL}${query}&per_page=100`
+    );
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockResponse);
   });
 });
